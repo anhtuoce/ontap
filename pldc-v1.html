@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn tập Pháp Luật Đại Cương</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #B22222;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+
+    .banner {
+      background-color: red;
+      padding: 10px;
+      text-align: center;
+      color: yellow;
+      font-weight: bold;
+      font-size: 18px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 15px;
+    }
+
+    .question {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .answer {
+      margin: 8px 0;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .answer.correct {
+      background-color: #d4edda;
+    }
+
+    .answer.incorrect {
+      background-color: #f8d7da;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #submitBtn {
+      background-color: #4CAF50;
+      color: white;
+      display: block;
+      margin: 20px auto;
+    }
+
+    #scoreResult {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    /* Sidebar nút 3 gạch */
+    .menu-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      font-size: 20px;
+      z-index: 1001;
+      border-radius: 6px;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    #sidebar h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #sidebar ul li {
+      margin: 10px 0;
+    }
+
+    #sidebar a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    #resultModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 1002;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      .answer {
+        font-size: 16px;
+      }
+
+      .menu-btn {
+        font-size: 16px;
+        padding: 6px 10px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+    }
+    body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        #audioPlayer {
+            display: none; /* Ẩn video */
+        }
+    </style>
+  </style>
+</head>
+<body>
+
+  <button class="menu-btn" style="color: black;" onclick="toggleSidebar()">☰</button>
+
+  <div id="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="#">📜 Xem lịch sử làm bài</a></li>
+      <li><a href="https://bom.so/fbtu">📞Liên Hệ Anh Tú</a></li>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <h3 style="color: red;">Bản Quyền ©: Anh Tú</h3>
+
+    </ul>
+  </div>
+
+  <div class="header">
+    <img src="https://ngaymoionline.com.vn/stores/news_dataimages/2024/042024/29/10/in_article/phim-tai-lieu20240429101141.jpg?rt=20240429101144" alt="Banner">
+    <body>
+      <h1>🎵 Âm Thanh Chiến Thắng</h1>
+      <button onclick="playAudio()">Click Nghe Tin</button>
+  
+      <div id="audioPlayer">
+          <iframe id="ytplayer" width="0" height="0" 
+                  src="" 
+                  frameborder="0" 
+                  allow="autoplay"
+                  allowfullscreen>
+          </iframe>
+      </div>
+  </div>
+  
+
+    <h1>Ôn tập Pháp Luật Đại Cương</h1>
+  </div>
+
+  <div class="banner">Kỷ niệm ngày 30/4 – Giải phóng miền Nam</div>
+
+  <div class="container">
+    <div class="question" data-correct="B">
+      <p><strong>Câu 1:</strong> Theo Mác-Lênin, nguyên nhân chính xuất hiện nhà nước là?</p>
+      <div class="answer">A. Phân hóa lao động</div>
+      <div class="answer">B. Mâu thuẫn giai cấp gay gắt</div>
+      <div class="answer">C. Địa hình thuận lợi</div>
+      <div class="answer">D. Các thành viên tự lập ra</div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="A">
+      <p><strong>Câu 2:</strong> Khi nghiên cứu về nguồn gốc Nhà nước, xem Nhà nước là hiện tượng siêu nhiên, vĩnh cửu là quan điểm của</p>
+      <div class="answer">A. Thuyết thần quyền</div>
+      <div class="answer">B. Thuyết gia trưởng</div>
+      <div class="answer">C. Thuyết khế ước xã hội</div>
+      <div class="answer">D. Thuyết bạo lực</div>
+      <div class="result"></div>
+    </div>
+  
+    <div class="question" data-correct="D">
+      <p><strong>Câu 3:</strong> Những quy phạm xã hội tồn tại trong xã hội cộng sản nguyên thủy là</p>
+      <div class="answer">A. Đạo đức, tập quán, pháp luật</div>
+      <div class="answer">B. Tập quán, tín điều tôn giáo, pháp luật</div>
+      <div class="answer">C. Tín điều tôn giáo, tập quán pháp</div>
+      <div class="answer">D. Đạo đức, tập quán, tín điều tôn giáo</div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="D">
+      <p><strong>Câu 4:</strong>Bản chất của Nhà nước gồm </p>
+      <div class="answer">A.Tính giai cấp </div>
+      <div class="answer">B.Tính xã hội </div>
+      <div class="answer">C.Tính dân tộc </div>
+      <div class="answer">D.Cả A và B </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="C">
+      <p><strong>Câu 5:</strong>Nhận định nào sau đây là SAI </p>
+      <div class="answer">A.Hội đồng thị tộc là tổ chức quyền lực cao nhất của thị tộc </div>
+      <div class="answer">B.Cơ sở kinh tế đặc trưng của xã hội cộng sản nguyên thủy là chế độ sở hữu chung về tư liệu sản xuất và sản phẩm lao động </div>
+      <div class="answer">C.Xã hội nguyên thủy đã tồn tại Nhà nước </div>
+      <div class="answer">D.Quyền lực trong xã hội cộng sản nguyên thủy là quyền lực xã hội, chưa mang tính giai cấp </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="C">
+      <p><strong>Câu 6:</strong>Bản chất xã hội của Nhà nước được thể hiện </p>
+      <div class="answer">A.Nhà nước là công cụ sắc bén để duy trì sự thống trị giai cấp </div>
+      <div class="answer">B.Nhà nước là một bộ máy trấn áp đặc biệt của giai cấp này đối với giai cấp khác </div>
+      <div class="answer">C.Nhà nước bảo đảm trật tự an toàn xã hội và giải quyết công việc chung của xã hội </div>
+      <div class="answer">D. Nhà nước là một bộ máy cưỡng chế đặc biệt nằm trong tay giai cấp cầm quyền </div>
+      <div class="result"></div>
+    </div>
+
+    <div class="question" data-correct="C">
+      <p><strong>Câu 7:</strong>Tại Việt Nam, tổ chức duy nhất được quyền phát hành tiền là </p>
+      <div class="answer">A.Quốc hội </div>
+      <div class="answer">B.Chính phủ </div>
+      <div class="answer">C.Ngân hàng Nhà nước </div>
+      <div class="answer">D.Các tổ chức chính trị - xã hội </div>
+      <div class="result"></div>
+    </div>
+
+    </div>
+    <div class="question" data-correct="C">
+      <p><strong>Câu 8:</strong>Quyền lập pháp được hiểu là </p>
+      <div class="answer">A.Quyền ban hành và triển khai thực hiện pháp luật </div>
+      <div class="answer">B.Thiết lập Hiến pháp </div>
+      <div class="answer">C.Soạn thảo và ban hành pháp luật </div>
+      <div class="answer">D.Thực hiện pháp luật </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="D">
+      <p><strong>Câu 9:</strong>Quyền hành pháp được hiểu là </p>
+      <div class="answer">A.Quyền ban hành và triển khai thực hiện pháp luật </div>
+      <div class="answer">B.Quyền ban hành pháp luật </div>
+      <div class="answer">C.Quyền bảo vệ pháp luật </div>
+      <div class="answer">D.Quyền tổ chức thực hiện pháp luật </div>
+      <div class="result"></div>
+    <div class="question" data-correct="D">
+      <p><strong>Câu 10:</strong>Pháp luật là sản phẩm của? </p>
+      <div class="answer">A.Tôn giáo </div>
+      <div class="answer">B.Đảng phái chính trị </div>
+      <div class="answer">C.Đạo đức </div>
+      <div class="answer">D.Nhà nước </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="B">
+      <p><strong>Câu 11:</strong>Pháp luật là phương tiện để khẳng định vai trò của giai cấp thống trị đối với toàn xã hội, đây là nội dung thế hiện? </p>
+      <div class="answer">A.Thuộc tính của pháp luật </div>
+      <div class="answer">B.Bản chất giai cấp của pháp luật </div>
+      <div class="answer">C.Bản chất của pháp luật </div>
+      <div class="answer">D.Bản chất xã hội của pháp luật </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="D">
+      <p><strong>Câu 12:</strong>Nội dung nào sau đây phù hợp với tỉnh quy phạm phố biến của pháp luật? </p>
+      <div class="answer">A.Phạm vì tác động của quy phạm xã hội rộng hơn so với pháp luật </div>
+      <div class="answer">B.Ai cũng cần phải thực hiện theo các tín điều tôn giáo được ban hành </div>
+      <div class="answer">C.Cơ quan có quyền ban hành pháp luật thì cũng có quyền không thực hiện pháp luật </div>
+      <div class="answer">D.. Phạm vi tác động của pháp luật rộng lớn cả về không gian, thời gian và đối tượng áp dụng </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="A">
+      <p><strong>Câu 13:</strong>Ưu thế vượt trội của pháp luật so với các quy phạm xã hội khác là? </p>
+      <div class="answer">A.Tính cưỡng chế </div>
+      <div class="answer">B.Tính rộng rãi </div>
+      <div class="answer">C.Tính xã hội </div>
+      <div class="answer">D.Tồn tại trong thời gian dài </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="C">
+      <p><strong>Câu 14:</strong>Các đáp án sau đều là văn bản quy phạm pháp luật, ngoại trừ? </p>
+      <div class="answer">A.Nghị quyết của Hội đồng Thẩm phán Tòa án nhân dân Tối cao </div>
+      <div class="answer">B.Nghị quyết của Hội đồng nhân dân Tp. Hồ Chí MinhVVVV </div>
+      <div class="answer">C.Nghị quyết của Đảng Cộng sản </div>
+      <div class="answer">D.Nghị quyết Ủy ban Thường vụ Quốc hội </div>
+      <div class="result"></div>
+    </div>
+    <div class="question" data-correct="D">
+      <p><strong>Câu 15:</strong>Chọn phương án đúng nhất điền vào chỗ trống: “Quy phạm pháp luật là quy tắc xử sự mang tính... do... ban hành và bảo đảm thực hiện, thể hiện ý chí và bảo vệ lợi ích của giai cấp thống trị để điều chỉnh các...?" </p>
+      <div class="answer">A.Bắt buộc chung - Nhà nước - quan hệ pháp luật </div>
+      <div class="answer">B.Bắt buộc – Nhà nước - quan hệ xã hội </div>
+      <div class="answer">C.Bắt buộc chung - Quốc hội – quan hệ xã hội </div>
+      <div class="answer">D.Bắt buộc chung - Nhà nước - quan hệ xã hội </div>
+      <div class="result"></div>
+    </div>
+
+
+
+
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 16:</strong> Bộ phận nào của quy phạm pháp luật mà “nêu quy tắc xử sự mà chủ thể thực hiện phải tuân theo"?</p>
+    <div class="answer">A. Giả định</div>
+    <div class="answer">B. Chế định</div>
+    <div class="answer">C. Quy định</div>
+    <div class="answer">D. Chế tài</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="D">
+    <p><strong>Câu 17:</strong> Quy phạm pháp luật và quy phạm xã hội?</p>
+    <div class="answer">A. Là hai khái niệm đồng nhất</div>
+    <div class="answer">B. Hoàn toàn giống nhau</div>
+    <div class="answer">C. Hoàn toàn khác nhau</div>
+    <div class="answer">D. Vừa có điểm giống nhau, vừa có điểm khác nhau</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 18:</strong> Bộ phận nào của quy phạm pháp luật nhằm bảo đảm cho pháp luật được thực hiện nghiêm chỉnh?</p>
+    <div class="answer">A. Giả định</div>
+    <div class="answer">B. Quy định</div>
+    <div class="answer">C. Chế tài</div>
+    <div class="answer">D. Cả a, b, c đều đúng</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 19:</strong> Sự kiện pháp lý là gì?</p>
+    <div class="answer">A. Là những hành vi xử sự của con người</div>
+    <div class="answer">B. Là những sự kiện thực tiễn đời sống xã hội</div>
+    <div class="answer">C. Là những tình huống, hiện tượng, quá trình xảy ra trong đời sống có liên quan tới sự xuất hiện, thay đổi và chấm dứt các quan hệ pháp luật</div>
+    <div class="answer">D. Cả A, B, C đều đúng</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 20:</strong> Quá trình hoạt động có mục đích nhằm đưa pháp luật vào cuộc sống, trở thành hành vi thực tế hợp pháp của các chủ thể pháp luật, gọi là?</p>
+    <div class="answer">A. Áp dụng pháp luật</div>
+    <div class="answer">B. Thực thi pháp luật</div>
+    <div class="answer">C. Thực hiện pháp luật</div>
+    <div class="answer">D. Thi hành pháp luật</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="A">
+    <p><strong>Câu 21:</strong> Quan hệ pháp luật là?</p>
+    <div class="answer">A. Quan hệ nảy sinh trong xã hội được các quy phạm pháp luật điều chỉnh</div>
+    <div class="answer">B. Quan hệ xã hội</div>
+    <div class="answer">C. Những quan hệ phát sinh khi có hành vi vi phạm pháp luật xảy ra</div>
+    <div class="answer">D. Quan hệ kinh tế, quan hệ chính trị, quan hệ gia đình</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="B">
+    <p><strong>Câu 22:</strong> Quan hệ pháp luật là hình thức đặc biệt của?</p>
+    <div class="answer">A. Quan hệ lao động</div>
+    <div class="answer">B. Quan hệ xã hội</div>
+    <div class="answer">C. Quy phạm pháp luật</div>
+    <div class="answer">D. Quan hệ chính trị</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 23:</strong> Một cá nhân trở thành chủ thể của quan hệ pháp luật cần phải?</p>
+    <div class="answer">A. Thực hiện nghĩa vụ pháp lý do pháp luật quy định</div>
+    <div class="answer">B. Không mắc bệnh tâm thần</div>
+    <div class="answer">C. Có năng lực pháp luật và năng lực hành vi</div>
+    <div class="answer">D. Cả a, b, c</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="B">
+    <p><strong>Câu 24:</strong> Cấu trúc pháp lý của một quan hệ pháp luật gồm các yếu tố cơ bản như sau?</p>
+    <div class="answer">A. Quyền và nghĩa vụ của các bên</div>
+    <div class="answer">B. Chủ thể, khách thể và nội dung</div>
+    <div class="answer">C. Năng lực pháp luật và năng lực hành vi</div>
+    <div class="answer">D. Bao gồm cả a, b, c</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="A">
+    <p><strong>Câu 25:</strong> Độ tuổi có khả năng lao động và có thể tự mình giao kết hợp đồng lao động là:</p>
+    <div class="answer">A. Đủ 15 tuổi</div>
+    <div class="answer">B. Đủ 14 tuổi</div>
+    <div class="answer">C. Đủ 13 tuổi</div>
+    <div class="answer">D. Đủ 12 tuổi</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="B">
+    <p><strong>Câu 26:</strong> Luật Dân sự điều chỉnh những quan hệ nào?</p>
+    <div class="answer">A. Quan hệ nhân thân và quan hệ kinh tế</div>
+    <div class="answer">B. Quan hệ nhân thân và quan hệ tài sản</div>
+    <div class="answer">C. Quan hệ tài sản và quan hệ gia đình</div>
+    <div class="answer">D. Tất cả các quan hệ xã hội có liên quan đến tài sản</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 27:</strong> Thế nào là tham nhũng?</p>
+    <div class="answer">A. Tham nhũng là hành vi của cá nhân vì vụ lợi.</div>
+    <div class="answer">B. Tham nhũng là hành vi phá hoại tài sản của người khác.</div>
+    <div class="answer">C. Tham nhũng là hành vi của người có chức vụ, quyền hạn đã lợi dụng chức vụ, quyền hạn đó vì vụ lợi.</div>
+    <div class="answer">D. Tham nhũng là hành vi cửa quyền, hách dịch, đòi hỏi, gây khó khăn, phiền hà...</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 28:</strong> Các chủ thể pháp luật kiềm chế không tiến hành những hành vi mà pháp luật ngăn cấm, đây là hình thức thực hiện pháp luật nào?</p>
+    <div class="answer">A. Sử dụng pháp luật</div>
+    <div class="answer">B. Thi hành pháp luật</div>
+    <div class="answer">C. Tuân thủ pháp luật</div>
+    <div class="answer">D. Áp dụng pháp luật</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="C">
+    <p><strong>Câu 29:</strong> Hành vi trái pháp luật nào sau đây là dạng hành vi không hành động?</p>
+    <div class="answer">A. Giúp người khác tự sát</div>
+    <div class="answer">B. Tàng trữ vũ khí</div>
+    <div class="answer">C. Không tố giác người phạm tội</div>
+    <div class="answer">D. Môi giới mại dâm</div>
+    <div class="result"></div>
+  </div>
+  
+  <div class="question" data-correct="A">
+    <p><strong>Câu 30:</strong> Những dấu hiệu bên ngoài của vi phạm pháp luật gọi là?</p>
+    <div class="answer">A. Mặt khách quan của vi phạm pháp luật</div>
+    <div class="answer">B. Mặt chủ quan của vi phạm pháp luật</div>
+    <div class="answer">C. Chủ thể của vi phạm pháp luật</div>
+    <div class="answer">D. Khách thể của vi phạm pháp luật</div>
+    <div class="result"></div>
+  </div>
+  
+
+  <!-- Modal kết quả -->
+  <div id="resultModal">
+    <h2>Kết quả bài làm</h2>
+    <p id="modalContent"></p>
+    <button onclick="closeModal()">Đóng</button>
+  </div>
+  <button id="submitBtn" onclick="checkAnswers()">📝 Nộp bài và xem kết quả</button>
+<div id="scoreResult"></div>
+
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-250px";
+      } else {
+        sidebar.style.left = "0px";
+      }
+    }
+
+    document.querySelectorAll('.question').forEach(q => {
+      const correct = q.dataset.correct;
+      const answers = q.querySelectorAll('.answer');
+      const result = q.querySelector('.result');
+
+      answers.forEach(ans => {
+        ans.addEventListener('click', () => {
+          answers.forEach(a => a.classList.remove('correct', 'incorrect'));
+          const selected = ans.textContent.trim().charAt(0);
+
+          if (selected === correct) {
+            ans.classList.add('correct');
+            result.textContent = "✅ Chính xác!";
+            result.style.color = "green";
+          } else {
+            ans.classList.add('incorrect');
+            result.textContent = `❌ Sai. Đáp án đúng là ${correct}`;
+            result.style.color = "red";
+          }
+        });
+      });
+    });
+
+    document.getElementById("submitBtn").addEventListener("click", function () {
+      let total = 0, correct = 0;
+
+      document.querySelectorAll('.question').forEach(q => {
+        const correctAnswer = q.dataset.correct;
+        const selected = [...q.querySelectorAll('.answer')].find(ans =>
+          ans.classList.contains('correct') || ans.classList.contains('incorrect'));
+
+        if (selected) {
+          total++;
+          if (selected.classList.contains('correct')) correct++;
+        }
+      });
+
+      const resultDiv = document.getElementById("scoreResult");
+      resultDiv.textContent = `Bạn đã trả lời đúng ${correct}/${total} câu.`;
+      resultDiv.style.color = correct === total ? "green" : (correct > total / 2 ? "orange" : "red");
+    });
+
+    function closeModal() {
+      document.getElementById("resultModal").style.display = "none";
+    }
+  </script>
+</body>
+<script>
+  const questions = document.querySelectorAll(".question");
+
+  questions.forEach(question => {
+    const answers = question.querySelectorAll(".answer");
+    answers.forEach(answer => {
+      answer.addEventListener("click", () => {
+        // Bỏ chọn các đáp án khác
+        answers.forEach(a => a.classList.remove("selected"));
+        answer.classList.add("selected");
+      });
+    });
+  });
+
+  function checkAnswers() {
+    let correctCount = 0;
+    questions.forEach(question => {
+      const correctAnswer = question.getAttribute("data-correct");
+      const answers = question.querySelectorAll(".answer");
+      let selectedAnswer = null;
+      answers.forEach(answer => {
+        if (answer.classList.contains("selected")) {
+          selectedAnswer = answer;
+        }
+      });
+
+      if (selectedAnswer) {
+        const selectedText = selectedAnswer.textContent.trim().charAt(0);
+        if (selectedText === correctAnswer) {
+          selectedAnswer.classList.add("correct");
+          question.querySelector(".result").textContent = "✅ Đúng";
+          correctCount++;
+        } else {
+          selectedAnswer.classList.add("incorrect");
+          question.querySelector(".result").textContent = "❌ Sai. Đáp án đúng: " + correctAnswer;
+        }
+      } else {
+        question.querySelector(".result").textContent = "⚠️ Bạn chưa chọn đáp án!";
+      }
+    });
+
+    document.getElementById("scoreResult").innerText = `🎯 Bạn đúng ${correctCount}/${questions.length} câu`;
+  }
+
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar.style.left === "0px") {
+      sidebar.style.left = "-250px";
+    } else {
+      sidebar.style.left = "0px";
+    }
+  }
+</script>
+<script>
+  function playAudio() {
+      const videoId = "-Bbezbpwt-Y"; // ID video YouTube
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      document.getElementById("ytplayer").src = embedUrl;
+  }
+</script>
+
+</html>
